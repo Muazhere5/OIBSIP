@@ -1,0 +1,17 @@
+# Dependencies
+node_modules/
+# Environment Variables
+.env
+.env.local
+.env.development
+.env.production
+# Build Outputs
+/build
+/dist
+# ADE / Agentic Traces (CRITICAL)
+AgentInstruction.md
+.antigravity/
+.ade_history/
+# OS Generated
+.DS_Store
+Thumbs.db
