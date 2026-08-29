@@ -4,6 +4,7 @@ import Navbar from './components/layout/Navbar';
 import Footer from './components/layout/Footer';
 import UserRegister from './pages/UserRegister';
 import UserLogin from './pages/UserLogin';
+import PizzaBuilder from './pages/PizzaBuilder';
 
 function App() {
   return (
@@ -14,6 +15,7 @@ function App() {
           <Routes>
             <Route path="/register" element={<UserRegister />} />
             <Route path="/login" element={<UserLogin />} />
+            <Route path="/builder" element={<PizzaBuilder />} />
           </Routes>
         </div>
         <Footer />

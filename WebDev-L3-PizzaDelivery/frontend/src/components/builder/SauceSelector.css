@@ -1,0 +1,41 @@
+.selector-container {
+    margin-bottom: 2rem;
+}
+
+.selector-title {
+    color: #d84315;
+    margin-bottom: 1rem;
+    font-size: 1.5rem;
+}
+
+.options-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: 1rem;
+}
+
+.option-card {
+    background-color: #ffffff;
+    padding: 1.5rem;
+    border-radius: 12px;
+    text-align: center;
+    cursor: pointer;
+    font-weight: bold;
+    color: #424242;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+    border: 2px solid transparent;
+}
+
+.option-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 15px rgba(216, 67, 21, 0.2);
+}
+
+.option-card.selected {
+    transform: scale(1.05);
+    border-color: #ffca28;
+    box-shadow: 0 0 20px rgba(255, 160, 0, 0.5);
+    background: linear-gradient(135deg, #fff8e1, #ffecb3);
+    color: #d84315;
+}
