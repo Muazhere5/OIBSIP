@@ -1,0 +1,66 @@
+.register-container {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(135deg, #ff6347, #ff9e80);
+    padding: 2rem;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.register-card {
+    background: rgba(255, 255, 255, 0.85);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border-radius: 20px;
+    padding: 3rem 2rem;
+    width: 100%;
+    max-width: 450px;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+    text-align: center;
+}
+
+.register-title {
+    color: #d84315;
+    font-size: 2rem;
+    margin-bottom: 1.5rem;
+    margin-top: 0;
+}
+
+.register-form {
+    display: flex;
+    flex-direction: column;
+    gap: 1.2rem;
+}
+
+.register-form input {
+    padding: 1rem;
+    border: 2px solid #ffccbc;
+    border-radius: 10px;
+    font-size: 1rem;
+    outline: none;
+    transition: border-color 0.3s;
+}
+
+.register-form input:focus {
+    border-color: #ff7043;
+}
+
+.register-button {
+    background-color: #ffca28;
+    color: #ffffff;
+    border: none;
+    padding: 1rem;
+    border-radius: 10px;
+    font-size: 1.2rem;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    margin-top: 0.5rem;
+}
+
+.register-button:hover {
+    background-color: #f57c00;
+    transform: scale(1.05);
+    box-shadow: 0 4px 15px rgba(245, 124, 0, 0.4);
+}
