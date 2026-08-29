@@ -3,6 +3,7 @@ import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import Navbar from './components/layout/Navbar';
 import Footer from './components/layout/Footer';
 import UserRegister from './pages/UserRegister';
+import UserLogin from './pages/UserLogin';
 
 function App() {
   return (
@@ -12,6 +13,7 @@ function App() {
         <div style={{ flex: 1 }}>
           <Routes>
             <Route path="/register" element={<UserRegister />} />
+            <Route path="/login" element={<UserLogin />} />
           </Routes>
         </div>
         <Footer />
