@@ -1,4 +1,7 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
+import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
+import { AuthContext } from '../context/AuthContext';
 import './UserLogin.css';
 
 const UserLogin = () => {
@@ -6,6 +9,9 @@ const UserLogin = () => {
         email: '',
         password: ''
     });
+    const [errorMsg, setErrorMsg] = useState('');
+    const navigate = useNavigate();
+    const { login } = useContext(AuthContext);
 
     const handleChange = (e) => {
         setFormData({
@@ -14,15 +20,23 @@ const UserLogin = () => {
         });
     };
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
-        console.log('Login attempt:', formData);
+        setErrorMsg('');
+        try {
+            const response = await axios.post('http://localhost:5000/api/users/login', formData);
+            login(response.data);
+            navigate('/builder');
+        } catch (error) {
+            setErrorMsg(error.response?.data?.message || 'Login failed');
+        }
     };
 
     return (
         <div className="login-container">
             <div className="login-card">
                 <h2 className="login-title">Slice into your Account</h2>
+                {errorMsg && <p className="error-message" style={{ color: 'yellow', textAlign: 'center' }}>{errorMsg}</p>}
                 <form onSubmit={handleSubmit} className="login-form">
                     <input
                         type="email"

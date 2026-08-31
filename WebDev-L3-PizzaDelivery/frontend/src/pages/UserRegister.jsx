@@ -1,4 +1,6 @@
 import React, { useState } from 'react';
+import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
 import './UserRegister.css';
 
 const UserRegister = () => {
@@ -7,6 +9,8 @@ const UserRegister = () => {
         email: '',
         password: ''
     });
+    const [errorMsg, setErrorMsg] = useState('');
+    const navigate = useNavigate();
 
     const handleChange = (e) => {
         setFormData({
@@ -15,15 +19,22 @@ const UserRegister = () => {
         });
     };
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
-        console.log('Register attempt:', formData);
+        setErrorMsg('');
+        try {
+            await axios.post('http://localhost:5000/api/users/register', formData);
+            navigate('/login');
+        } catch (error) {
+            setErrorMsg(error.response?.data?.message || 'Registration failed');
+        }
     };
 
     return (
         <div className="register-container">
             <div className="register-card">
                 <h2 className="register-title">Bake Your Account</h2>
+                {errorMsg && <p className="error-message" style={{ color: 'yellow', textAlign: 'center' }}>{errorMsg}</p>}
                 <form onSubmit={handleSubmit} className="register-form">
                     <input
                         type="text"

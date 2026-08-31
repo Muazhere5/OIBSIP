@@ -16,9 +16,10 @@ const registerUser = async (req, res) => {
             email,
             password: hashedPassword
         });
-        const token = jwt.sign({ id: user._id, role: user.role }, process.env.JWT_SECRET, { expiresIn: '30d' });
+        const token = jwt.sign({ id: user._id, role: user.role }, process.env.JWT_SECRET, { expiresIn: process.env.JWT_EXPIRE });
         res.status(201).json({ _id: user._id, name: user.name, email: user.email, token });
     } catch (error) {
+        console.error(error.message);
         res.status(500).json({ message: 'Server error' });
     }
 };
@@ -34,9 +35,10 @@ const loginUser = async (req, res) => {
         if (!isMatch) {
             return res.status(401).json({ message: 'Invalid credentials' });
         }
-        const token = jwt.sign({ id: user._id, role: user.role }, process.env.JWT_SECRET, { expiresIn: '30d' });
+        const token = jwt.sign({ id: user._id, role: user.role }, process.env.JWT_SECRET, { expiresIn: process.env.JWT_EXPIRE });
         res.status(200).json({ _id: user._id, name: user.name, email: user.email, token });
     } catch (error) {
+        console.error(error.message);
         res.status(500).json({ message: 'Server error' });
     }
 };

@@ -6,6 +6,8 @@ import UserRegister from './pages/UserRegister';
 import UserLogin from './pages/UserLogin';
 import PizzaBuilder from './pages/PizzaBuilder';
 
+import Home from './pages/Home';
+
 function App() {
   return (
     <BrowserRouter>
@@ -13,6 +15,7 @@ function App() {
         <Navbar />
         <div style={{ flex: 1 }}>
           <Routes>
+            <Route path="/" element={<Home />} />
             <Route path="/register" element={<UserRegister />} />
             <Route path="/login" element={<UserLogin />} />
             <Route path="/builder" element={<PizzaBuilder />} />

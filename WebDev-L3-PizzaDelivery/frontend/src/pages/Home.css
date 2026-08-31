@@ -1,0 +1,44 @@
+.home-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: calc(100vh - 120px);
+    background: linear-gradient(135deg, #8B0000 0%, #FF4500 100%);
+    color: #FFF8DC;
+    text-align: center;
+    padding: 2rem;
+}
+
+.home-title {
+    font-size: 4rem;
+    font-weight: 800;
+    margin-bottom: 1rem;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+}
+
+.home-subtitle {
+    font-size: 1.5rem;
+    margin-bottom: 2.5rem;
+    text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.5);
+}
+
+.cta-button {
+    padding: 1rem 2.5rem;
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: #8B0000;
+    background-color: #FFD700;
+    border: none;
+    border-radius: 50px;
+    cursor: pointer;
+    text-decoration: none;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+    transition: transform 0.2s ease, box-shadow 0.2s ease, background-color 0.2s ease;
+}
+
+.cta-button:hover {
+    transform: scale(1.05);
+    background-color: #FFA500;
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
+}
