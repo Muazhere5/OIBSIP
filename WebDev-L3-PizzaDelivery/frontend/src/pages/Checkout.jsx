@@ -1,6 +1,7 @@
 import React, { useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { OrderContext } from '../context/OrderContext';
+import RazorpayButton from '../components/order/RazorpayButton';
 import './Checkout.css';
 
 const Checkout = () => {
@@ -55,9 +56,7 @@ const Checkout = () => {
                     <h3 className="total-amount">${orderData.total}</h3>
                 </div>
 
-                <button className="razorpay-btn">
-                    Pay with Razorpay
-                </button>
+                <RazorpayButton />
             </div>
         </div>
     );
