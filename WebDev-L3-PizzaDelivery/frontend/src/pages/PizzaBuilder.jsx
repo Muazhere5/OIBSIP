@@ -1,8 +1,10 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
+import { useNavigate } from 'react-router-dom';
 import BaseSelector from '../components/builder/BaseSelector';
 import SauceSelector from '../components/builder/SauceSelector';
 import CheeseSelector from '../components/builder/CheeseSelector';
 import VeggieSelector from '../components/builder/VeggieSelector';
+import { OrderContext } from '../context/OrderContext';
 import './PizzaBuilder.css';
 
 const PizzaBuilder = () => {
@@ -10,6 +12,9 @@ const PizzaBuilder = () => {
     const [selectedSauce, setSelectedSauce] = useState('Classic Tomato');
     const [selectedCheese, setSelectedCheese] = useState('Mozzarella');
     const [selectedVeggies, setSelectedVeggies] = useState([]);
+    
+    const { setOrderData } = useContext(OrderContext);
+    const navigate = useNavigate();
 
     const basePrices = {
         'Thin Crust': 10,
@@ -27,6 +32,17 @@ const PizzaBuilder = () => {
         return total.toFixed(2);
     };
 
+    const handleCheckout = () => {
+        setOrderData({
+            base: selectedBase,
+            sauce: selectedSauce,
+            cheese: selectedCheese,
+            veggies: selectedVeggies,
+            total: calculateTotal()
+        });
+        navigate('/checkout');
+    };
+
     return (
         <div className="builder-container">
             <div className="builder-content">
@@ -39,7 +55,7 @@ const PizzaBuilder = () => {
 
                 <div className="checkout-section">
                     <h2 className="total-price">Total: ${calculateTotal()}</h2>
-                    <button className="checkout-btn">Proceed to Checkout</button>
+                    <button className="checkout-btn" onClick={handleCheckout}>Proceed to Checkout</button>
                 </div>
             </div>
         </div>

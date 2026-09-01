@@ -7,6 +7,7 @@ import UserLogin from './pages/UserLogin';
 import PizzaBuilder from './pages/PizzaBuilder';
 
 import Home from './pages/Home';
+import Checkout from './pages/Checkout';
 
 function App() {
   return (
@@ -19,6 +20,7 @@ function App() {
             <Route path="/register" element={<UserRegister />} />
             <Route path="/login" element={<UserLogin />} />
             <Route path="/builder" element={<PizzaBuilder />} />
+            <Route path="/checkout" element={<Checkout />} />
           </Routes>
         </div>
         <Footer />
