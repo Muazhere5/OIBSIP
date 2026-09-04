@@ -44,4 +44,34 @@ const verifyPaymentAndSave = async (req, res) => {
     }
 };
 
-module.exports = { createRazorpayOrder, verifyPaymentAndSave };
+const getAllOrders = async (req, res) => {
+    try {
+        const orders = await OrderModel.find().sort({ _id: -1 });
+        res.status(200).json(orders);
+    } catch (error) {
+        res.status(500).json({ message: 'Error fetching orders' });
+    }
+};
+
+const updateOrderStatus = async (req, res) => {
+    try {
+        const { id } = req.params;
+        const { status } = req.body;
+        const updatedOrder = await OrderModel.findByIdAndUpdate(id, { status }, { new: true });
+        
+        if (!updatedOrder) {
+            return res.status(404).json({ message: 'Order not found' });
+        }
+
+        const io = req.app.get('io');
+        if (io) {
+            io.emit('order-status-updated', { orderId: updatedOrder._id, status: updatedOrder.status });
+        }
+
+        res.status(200).json(updatedOrder);
+    } catch (error) {
+        res.status(500).json({ message: 'Error updating order status' });
+    }
+};
+
+module.exports = { createRazorpayOrder, verifyPaymentAndSave, getAllOrders, updateOrderStatus };

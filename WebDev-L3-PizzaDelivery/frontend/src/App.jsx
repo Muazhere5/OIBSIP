@@ -6,6 +6,8 @@ import UserRegister from './pages/UserRegister';
 import UserLogin from './pages/UserLogin';
 import PizzaBuilder from './pages/PizzaBuilder';
 import LiveTracker from './components/order/LiveTracker';
+import AdminLogin from './pages/AdminLogin';
+import AdminDashboard from './pages/AdminDashboard';
 
 import Home from './pages/Home';
 import Checkout from './pages/Checkout';
@@ -23,6 +25,8 @@ function App() {
             <Route path="/builder" element={<PizzaBuilder />} />
             <Route path="/checkout" element={<Checkout />} />
             <Route path="/live-tracker" element={<LiveTracker />} />
+            <Route path="/admin" element={<AdminLogin />} />
+            <Route path="/admin-dashboard" element={<AdminDashboard />} />
           </Routes>
         </div>
         <Footer />

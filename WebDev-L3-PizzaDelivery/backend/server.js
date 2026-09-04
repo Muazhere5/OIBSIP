@@ -18,8 +18,10 @@ app.use(express.json());
 
 app.use('/api/users', userAuthRoutes);
 app.use('/api/orders', orderRoutes);
+app.use('/api/admin', require('./routes/adminAuthRoutes'));
 
-configureSocket(server);
+const io = configureSocket(server);
+app.set('io', io);
 
 const PORT = process.env.PORT || 5000;
 
