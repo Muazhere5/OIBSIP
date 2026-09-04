@@ -37,6 +37,22 @@ const verifyPaymentAndSave = async (req, res) => {
             status: 'Received'
         });
 
+        const itemsToDecrement = [];
+        if (orderData.base) itemsToDecrement.push(orderData.base);
+        if (orderData.sauce) itemsToDecrement.push(orderData.sauce);
+        if (orderData.cheese && orderData.cheese !== 'No Cheese') itemsToDecrement.push(orderData.cheese);
+        if (orderData.veggies && Array.isArray(orderData.veggies)) {
+            itemsToDecrement.push(...orderData.veggies);
+        }
+
+        const InventoryModel = require('../models/InventoryModel');
+        for (const itemName of itemsToDecrement) {
+            await InventoryModel.findOneAndUpdate(
+                { name: itemName },
+                { $inc: { quantity: -1 } }
+            );
+        }
+
         res.status(201).json({ message: 'Order placed successfully', orderId: newOrder._id });
     } catch (error) {
         console.error(error.message);

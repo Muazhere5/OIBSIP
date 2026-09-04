@@ -8,6 +8,9 @@ import PizzaBuilder from './pages/PizzaBuilder';
 import LiveTracker from './components/order/LiveTracker';
 import AdminLogin from './pages/AdminLogin';
 import AdminDashboard from './pages/AdminDashboard';
+import ForgotPassword from './pages/ForgotPassword';
+import ResetPassword from './pages/ResetPassword';
+import UserDashboard from './pages/UserDashboard';
 
 import Home from './pages/Home';
 import Checkout from './pages/Checkout';
@@ -22,6 +25,9 @@ function App() {
             <Route path="/" element={<Home />} />
             <Route path="/register" element={<UserRegister />} />
             <Route path="/login" element={<UserLogin />} />
+            <Route path="/forgot-password" element={<ForgotPassword />} />
+            <Route path="/reset-password/:token" element={<ResetPassword />} />
+            <Route path="/dashboard" element={<UserDashboard />} />
             <Route path="/builder" element={<PizzaBuilder />} />
             <Route path="/checkout" element={<Checkout />} />
             <Route path="/live-tracker" element={<LiveTracker />} />

@@ -26,7 +26,7 @@ const UserLogin = () => {
         try {
             const response = await axios.post('http://localhost:5000/api/users/login', formData);
             login(response.data);
-            navigate('/builder');
+            navigate('/dashboard');
         } catch (error) {
             setErrorMsg(error.response?.data?.message || 'Login failed');
         }
@@ -56,6 +56,9 @@ const UserLogin = () => {
                     />
                     <button type="submit" className="login-button">Login</button>
                 </form>
+                <div style={{ textAlign: 'center', marginTop: '15px' }}>
+                    <a href="/forgot-password" style={{ color: '#fff', fontSize: '14px', textDecoration: 'underline' }}>Forgot Password?</a>
+                </div>
             </div>
         </div>
     );

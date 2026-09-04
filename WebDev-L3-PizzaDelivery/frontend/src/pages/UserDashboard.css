@@ -1,0 +1,124 @@
+.dashboard-container {
+    padding: 40px;
+    background-color: #111;
+    min-height: 100vh;
+    color: white;
+}
+
+.cta-banner {
+    background: linear-gradient(135deg, #e67e22, #d35400);
+    padding: 30px;
+    border-radius: 12px;
+    text-align: center;
+    margin-bottom: 50px;
+    box-shadow: 0 0 30px rgba(230, 126, 34, 0.5);
+    cursor: pointer;
+    transition: transform 0.3s, box-shadow 0.3s;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.cta-banner:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 0 50px rgba(230, 126, 34, 0.8);
+}
+
+.cta-banner h2 {
+    margin: 0 0 15px 0;
+    font-size: 28px;
+    text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+}
+
+.cta-btn {
+    background-color: #fff;
+    color: #d35400;
+    border: none;
+    padding: 12px 30px;
+    font-size: 18px;
+    font-weight: bold;
+    border-radius: 30px;
+    cursor: pointer;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+}
+
+.menu-title {
+    text-align: center;
+    font-size: 36px;
+    margin-bottom: 40px;
+    color: #fff;
+}
+
+.pizza-menu-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 30px;
+}
+
+.pizza-card {
+    background-color: #1a1a1a;
+    border-radius: 15px;
+    overflow: hidden;
+    box-shadow: 0 10px 20px rgba(0,0,0,0.4);
+    transition: transform 0.3s;
+    border: 1px solid #333;
+}
+
+.pizza-card:hover {
+    transform: translateY(-10px);
+    border-color: #e67e22;
+}
+
+.pizza-image-placeholder {
+    height: 200px;
+    background-color: #222;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 80px;
+    border-bottom: 2px solid #333;
+}
+
+.pizza-info {
+    padding: 20px;
+}
+
+.pizza-info h3 {
+    margin: 0 0 10px 0;
+    color: #e67e22;
+}
+
+.pizza-info p {
+    color: #aaa;
+    font-size: 14px;
+    min-height: 40px;
+}
+
+.pizza-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 20px;
+}
+
+.pizza-price {
+    font-size: 24px;
+    font-weight: bold;
+    color: #fff;
+}
+
+.order-preset-btn {
+    background-color: #e67e22;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 8px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+.order-preset-btn:hover {
+    background-color: #d35400;
+}
