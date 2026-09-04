@@ -1,10 +1,13 @@
-import React, { useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import OrderKanban from '../components/admin/OrderKanban';
+import InventoryTable from '../components/admin/InventoryTable';
+import StockUpdater from '../components/admin/StockUpdater';
 import './AdminDashboard.css';
 
 const AdminDashboard = () => {
   const navigate = useNavigate();
+  const [refreshTrigger, setRefreshTrigger] = useState(0);
 
   useEffect(() => {
     const token = localStorage.getItem('adminToken');
@@ -24,6 +27,8 @@ const AdminDashboard = () => {
       </header>
       <main className="dashboard-main">
         <OrderKanban />
+        <InventoryTable refreshTrigger={refreshTrigger} />
+        <StockUpdater onUpdate={() => setRefreshTrigger(prev => prev + 1)} />
       </main>
     </div>
   );

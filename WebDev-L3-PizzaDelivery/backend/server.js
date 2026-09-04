@@ -19,6 +19,9 @@ app.use(express.json());
 app.use('/api/users', userAuthRoutes);
 app.use('/api/orders', orderRoutes);
 app.use('/api/admin', require('./routes/adminAuthRoutes'));
+app.use('/api/inventory', require('./routes/inventoryRoutes'));
+
+require('./jobs/inventoryCronJob');
 
 const io = configureSocket(server);
 app.set('io', io);
