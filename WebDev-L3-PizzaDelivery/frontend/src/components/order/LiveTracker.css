@@ -1,0 +1,136 @@
+.live-tracker-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 40px;
+  background-color: #1a1a1a;
+  border-radius: 12px;
+  max-width: 600px;
+  margin: 40px auto;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+  color: white;
+}
+
+.pizza-visual {
+  width: 200px;
+  height: 200px;
+  border-radius: 50%;
+  margin-bottom: 40px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transition: all 0.5s ease;
+  position: relative;
+}
+
+.pizza-visual::after {
+  content: "🍕";
+  font-size: 80px;
+  position: absolute;
+  animation: float 3s ease-in-out infinite;
+}
+
+.pizza-circle {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  border: 4px dashed transparent;
+}
+
+.received .pizza-circle {
+  border-color: #3498db;
+  animation: spin 4s linear infinite;
+}
+
+.in-kitchen .pizza-visual {
+  box-shadow: 0 0 50px #e67e22, inset 0 0 50px #e67e22;
+  background-color: rgba(230, 126, 34, 0.2);
+}
+.in-kitchen .pizza-circle {
+  border-color: #e67e22;
+  animation: pulse-glow 1.5s ease-in-out infinite;
+}
+
+.sent-to-delivery .pizza-visual {
+  transform: translateX(20px);
+  animation: drive 2s ease-in-out infinite alternate;
+}
+.sent-to-delivery .pizza-circle {
+  border-color: #2ecc71;
+  border-style: solid;
+}
+.sent-to-delivery::after {
+  content: "🛵";
+}
+
+.timeline {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  position: relative;
+}
+
+.timeline::before {
+  content: '';
+  position: absolute;
+  top: 15px;
+  left: 30px;
+  right: 30px;
+  height: 4px;
+  background-color: #333;
+  z-index: 1;
+}
+
+.timeline-stage {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  z-index: 2;
+}
+
+.stage-icon {
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  background-color: #333;
+  margin-bottom: 10px;
+  transition: all 0.3s ease;
+  border: 4px solid #1a1a1a;
+}
+
+.timeline-stage.active .stage-icon {
+  background-color: #e67e22;
+  box-shadow: 0 0 10px #e67e22;
+}
+
+.stage-text {
+  font-size: 14px;
+  font-weight: bold;
+  color: #777;
+  transition: color 0.3s ease;
+}
+
+.timeline-stage.active .stage-text {
+  color: #fff;
+}
+
+@keyframes spin {
+  100% { transform: rotate(360deg); }
+}
+
+@keyframes pulse-glow {
+  0% { transform: scale(1); opacity: 0.8; }
+  50% { transform: scale(1.05); opacity: 1; box-shadow: 0 0 20px #e67e22; }
+  100% { transform: scale(1); opacity: 0.8; }
+}
+
+@keyframes drive {
+  0% { transform: translateX(-10px) translateY(0); }
+  100% { transform: translateX(10px) translateY(-5px); }
+}
+
+@keyframes float {
+  0% { transform: translateY(0); }
+  50% { transform: translateY(-10px); }
+  100% { transform: translateY(0); }
+}

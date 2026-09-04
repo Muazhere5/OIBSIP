@@ -5,6 +5,7 @@ import Footer from './components/layout/Footer';
 import UserRegister from './pages/UserRegister';
 import UserLogin from './pages/UserLogin';
 import PizzaBuilder from './pages/PizzaBuilder';
+import LiveTracker from './components/order/LiveTracker';
 
 import Home from './pages/Home';
 import Checkout from './pages/Checkout';
@@ -21,6 +22,7 @@ function App() {
             <Route path="/login" element={<UserLogin />} />
             <Route path="/builder" element={<PizzaBuilder />} />
             <Route path="/checkout" element={<Checkout />} />
+            <Route path="/live-tracker" element={<LiveTracker />} />
           </Routes>
         </div>
         <Footer />
