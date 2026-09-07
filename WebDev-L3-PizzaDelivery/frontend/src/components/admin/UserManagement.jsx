@@ -4,6 +4,7 @@ import './UserManagement.css';
 
 const UserManagement = () => {
     const [users, setUsers] = useState([]);
+    const [networkError, setNetworkError] = useState('');
 
     const fetchUsers = async () => {
         try {
@@ -12,8 +13,9 @@ const UserManagement = () => {
                 headers: { Authorization: `Bearer ${token}` }
             });
             setUsers(res.data);
+            setNetworkError('');
         } catch (error) {
-            console.error(error);
+            setNetworkError('Cannot fetch users. Network error.');
         }
     };
 
@@ -29,7 +31,7 @@ const UserManagement = () => {
             });
             fetchUsers();
         } catch (error) {
-            console.error(error);
+            setNetworkError('Cannot approve user. Network error.');
         }
     };
 
@@ -41,9 +43,18 @@ const UserManagement = () => {
             });
             fetchUsers();
         } catch (error) {
-            console.error(error);
+            setNetworkError('Cannot delete user. Network error.');
         }
     };
+
+    if (networkError) {
+        return (
+            <div className="user-management-container" style={{ textAlign: 'center', padding: '50px' }}>
+                <h3 style={{ color: '#ff4444' }}>{networkError}</h3>
+                <button onClick={fetchUsers} className="approve-btn">Retry</button>
+            </div>
+        );
+    }
 
     return (
         <div className="user-management-container">

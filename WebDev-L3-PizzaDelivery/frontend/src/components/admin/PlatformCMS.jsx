@@ -5,6 +5,7 @@ import './PlatformCMS.css';
 const PlatformCMS = () => {
     const [slidingAds, setSlidingAds] = useState([]);
     const [newAd, setNewAd] = useState('');
+    const [networkError, setNetworkError] = useState('');
 
     useEffect(() => {
         const fetchSettings = async () => {
@@ -12,9 +13,10 @@ const PlatformCMS = () => {
                 const res = await axios.get(`${import.meta.env.VITE_API_URL}/api/admin/settings`);
                 if (res.data && res.data.slidingAds) {
                     setSlidingAds(res.data.slidingAds);
+                    setNetworkError('');
                 }
             } catch (error) {
-                console.error(error);
+                setNetworkError('Cannot connect to server. Please ensure backend is running.');
             }
         };
         fetchSettings();
@@ -39,10 +41,19 @@ const PlatformCMS = () => {
                 headers: { Authorization: `Bearer ${token}` }
             });
             alert('Settings saved successfully!');
+            setNetworkError('');
         } catch (error) {
-            console.error(error);
+            setNetworkError('Cannot save settings. Network error.');
         }
     };
+
+    if (networkError) {
+        return (
+            <div className="cms-container" style={{ textAlign: 'center', padding: '50px' }}>
+                <h3 style={{ color: '#ff4444' }}>{networkError}</h3>
+            </div>
+        );
+    }
 
     return (
         <div className="cms-container">
