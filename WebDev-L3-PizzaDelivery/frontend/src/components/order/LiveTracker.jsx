@@ -6,7 +6,7 @@ const LiveTracker = () => {
   const [orderStatus, setOrderStatus] = useState('Received');
 
   useEffect(() => {
-    const socket = io('http://localhost:5000');
+    const socket = io(`${import.meta.env.VITE_API_URL}`);
     
     socket.on('order-status-updated', (data) => {
       if (data && data.status) {

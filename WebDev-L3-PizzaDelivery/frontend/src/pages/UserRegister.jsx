@@ -23,7 +23,7 @@ const UserRegister = () => {
         e.preventDefault();
         setErrorMsg('');
         try {
-            await axios.post('http://localhost:5000/api/users/register', formData);
+            await axios.post(`${import.meta.env.VITE_API_URL}/api/users/register`, formData);
             navigate('/login');
         } catch (error) {
             setErrorMsg(error.response?.data?.message || 'Registration failed');

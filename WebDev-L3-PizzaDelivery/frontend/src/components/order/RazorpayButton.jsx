@@ -12,12 +12,16 @@ const RazorpayButton = () => {
     const navigate = useNavigate();
 
     const handlePayment = async () => {
+        if (!user) {
+            navigate('/login');
+            return;
+        }
         setLoading(true);
         try {
-            const { data: order } = await axios.post('http://localhost:5000/api/orders/create', { total: orderData.total });
+            const { data: order } = await axios.post(`${import.meta.env.VITE_API_URL}/api/orders/create`, { total: orderData.total });
             
             const options = {
-                key: 'test_key',
+                key: import.meta.env.VITE_RAZORPAY_KEY_ID,
                 amount: order.amount,
                 currency: 'USD',
                 name: 'Pizza Delivery',
@@ -25,10 +29,10 @@ const RazorpayButton = () => {
                 order_id: order.id,
                 handler: async function (response) {
                     try {
-                        await axios.post('http://localhost:5000/api/orders/verify', {
+                        await axios.post(`${import.meta.env.VITE_API_URL}/api/orders/verify`, {
                             ...response,
                             orderData,
-                            userId: user?._id || 'guest_id'
+                            userId: user._id
                         });
                         setOrderData(null);
                         navigate('/live-tracker');
@@ -38,8 +42,8 @@ const RazorpayButton = () => {
                     }
                 },
                 prefill: {
-                    name: user?.name || 'Guest',
-                    email: user?.email || 'guest@example.com',
+                    name: user.name,
+                    email: user.email,
                 },
                 theme: {
                     color: '#FF4500'

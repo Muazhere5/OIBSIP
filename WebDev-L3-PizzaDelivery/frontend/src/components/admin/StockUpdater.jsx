@@ -13,7 +13,7 @@ const StockUpdater = ({ onUpdate }) => {
 
   const fetchItems = async () => {
     try {
-      const res = await axios.get('http://localhost:5000/api/inventory');
+      const res = await axios.get(`${import.meta.env.VITE_API_URL}/api/inventory`);
       setItems(res.data);
       if (res.data.length > 0) setSelectedItem(res.data[0]._id);
     } catch (err) {

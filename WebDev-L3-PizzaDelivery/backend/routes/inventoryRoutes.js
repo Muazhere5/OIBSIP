@@ -2,7 +2,9 @@ const express = require('express');
 const router = express.Router();
 const { getAllInventory, updateStock } = require('../controllers/inventoryController');
 
-router.get('/', getAllInventory);
-router.put('/:id', updateStock);
+const { protectRoute } = require('../middleware/authMiddleware');
+
+router.get('/', protectRoute, getAllInventory);
+router.put('/:id', protectRoute, updateStock);
 
 module.exports = router;

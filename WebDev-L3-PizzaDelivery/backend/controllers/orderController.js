@@ -48,7 +48,7 @@ const verifyPaymentAndSave = async (req, res) => {
         const InventoryModel = require('../models/InventoryModel');
         for (const itemName of itemsToDecrement) {
             await InventoryModel.findOneAndUpdate(
-                { name: itemName },
+                { name: itemName, quantity: { $gt: 0 } },
                 { $inc: { quantity: -1 } }
             );
         }

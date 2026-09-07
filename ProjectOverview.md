@@ -1,37 +1,22 @@
-# Pizza Delivery Full-Stack Application: Project Overview
+# Deep Project Scan: Errors, Bugs, & Suspicious Areas
 
-This document outlines the setup, configuration, and build phases completed thus far for the Oasis Infobyte Level 3 Pizza Delivery project.
+Based on a thorough, deep scan of the entire MERN stack project, several critical bugs, security vulnerabilities, logic flaws, and missing assets have been identified. 
 
-## 1. Environment & Operational Security (OpSec) Setup
-- **Version Control:** Git repository initialized and connected to the remote origin (`https://github.com/Muazhere5/OIBSIP.git`).
-- **OpSec Configuration:** A highly restrictive `.gitignore` was established. It ensures that standard build outputs (`node_modules`, `/dist`), environment variables (`.env`), and all internal system/agentic directives (`AgentInstruction.md`, `BuildProcess.md`, `ProjectAcknowledgement.md`, `BuildPhase.md`) remain strictly hidden and untracked from the remote repository.
-- **Humanoid Directive:** All code has been written strictly adhering to the "Zero Comments" rule. No inline comments, block comments, or docstrings exist within the application logic, simulating a fast-paced intern development environment.
+## 1. Missing Images & Assets
+* **Missing Background Image:** The `ForgotPassword.css` and `ResetPassword.css` files heavily rely on a background image referenced via `url('../assets/pizza-bg.jpg')`. However, this file does not exist in the `frontend/src/assets/` directory, resulting in a broken background on those pages.
+* **Emoji Placeholders Instead of Actual Images:** The `UserDashboard.jsx` displays preset signature pizzas using text-based emojis (e.g., `🍕`, `🥗`) for the `image` property. Given the specific requirement for "visually stunning placeholder pizza cards," actual high-quality image assets were meant to be attached here.
 
-## 2. Phase 1: Foundational Build & MERN Setup
-- **Backend Architecture:** 
-  - Scaffolded a Node.js/Express.js application.
-  - Installed critical dependencies: `express`, `mongoose`, `cors`, `dotenv`, `jsonwebtoken`, `bcryptjs`, `razorpay`, `socket.io`, `node-cron`, `nodemailer`.
-  - Built the initial Express server configuration (`server.js`) listening on the designated environment port.
-  - Set up a clean MongoDB connection handler (`config/dbConnection.js`).
-- **Frontend Architecture:**
-  - Initialized a React application utilizing Vite for high-performance builds.
-  - Implemented the "Pizza Feel" UI/UX paradigm—focusing on warm colors (tomato red, warm yellow, burnt charcoal), deep gradients, and interactive CSS hover states.
-  - Created the foundational layout components: `Navbar.jsx` and `Footer.jsx` with isolated CSS modules.
+## 2. Critical Errors & Application Crashes
+* **Razorpay SDK Not Loaded (Checkout Broken):** The `RazorpayButton.jsx` component attempts to trigger the payment modal by calling `new window.Razorpay(options)`. However, the Razorpay checkout script (`<script src="https://checkout.razorpay.com/v1/checkout.js"></script>`) is missing from `frontend/index.html`. This throws a `window.Razorpay is not a constructor` error, completely breaking the checkout process.
+* **Mongoose ObjectId Casting Crash (Guest Checkout):** The `OrderModel` strictly enforces `userId` as an `ObjectId`. However, in `RazorpayButton.jsx`, an unauthenticated user falls back to passing `userId: 'guest_id'`. When the backend's `/verify` route attempts to save this string, Mongoose will fail to cast it to an `ObjectId`, crashing the server and resulting in a 500 Internal Server Error.
 
-## 3. Phase 2: Core Models & Authentication UI
-- **Database Schemas:** Designed and integrated Mongoose schemas following a granular file structure:
-  - `UserModel.js`: Manages user credentials and roles.
-  - `AdminModel.js`: Secures admin credentials.
-  - `InventoryModel.js`: Tracks ingredients (base, sauce, cheese, veggie) with default quantities.
-  - `OrderModel.js`: Manages user order references, items, amounts, and real-time statuses.
-- **Backend Authentication Integration:**
-  - Configured secure environment variables (`MONGO_URI`, `JWT_SECRET`, `PORT`) in `.env`.
-  - Built `userAuthController.js` with linear, simple `registerUser` and `loginUser` logic implementing `bcryptjs` hashing and `jsonwebtoken` issuance.
-  - Connected these controllers to POST endpoints via `userAuthRoutes.js` and mounted them on the main server.
-- **Frontend Authentication UI:**
-  - Scaffolded `UserRegister.jsx` and `UserLogin.jsx` pages using standard React functional components and `useState` for form handling.
-  - Applied the "Pizza Feel" to both pages using glassmorphism (semi-transparent cards with backdrop-blur) set against rich tomato-red gradients, ensuring a visually mouth-watering user experience.
-  - Set up React Router in `App.jsx` to navigate seamlessly between the layout components and auth pages.
+## 3. Security Vulnerabilities
+* **Backend API Routes Are Completely Unprotected:** The admin routes for managing inventory (`PUT /api/inventory/:id`) and orders (`PUT /api/orders/:id/status`, `GET /api/orders`) have absolutely no JWT or role-based authentication middleware attached to them in `inventoryRoutes.js` and `orderRoutes.js`. Anyone with knowledge of the endpoint URLs can manipulate the system's database.
+* **Insecure Frontend Route Guarding:** `AdminDashboard.jsx` merely checks if `localStorage.getItem('adminToken')` exists to protect the route. An attacker can easily bypass this by manually adding a fake token to their browser's local storage to view the admin UI.
+* **Hardcoded Admin Credentials:** The backend `adminAuthController.js` explicitly hardcodes the admin login credentials (`admin@oasis.com` / `admin123`) instead of verifying a securely hashed password against an Admin database collection.
 
-## Summary
-The application currently possesses a fully functional boilerplate backend securely connected to MongoDB, complete authentication routing and controller logic, and a beautifully styled frontend boilerplate ready for the interactive Pizza Builder logic in Phase 3.
+## 4. Logic & Implementation Flaws
+* **No Inventory Pre-Validation (Negative Stock):** During payment verification, the `orderController` blindly applies `$inc: { quantity: -1 }` to decrement ingredients. There is no pre-check to ensure the ingredient's `quantity > 0`, meaning the system will happily allow inventory to drop into negative numbers.
+* **Hardcoded API Endpoints:** Every Axios request and Socket.io connection in the frontend is hardcoded to `http://localhost:5000`. This tightly couples the frontend to the local environment and will break immediately when deployed to production.
+* **Hardcoded Razorpay Key:** The Razorpay `key` configuration in `RazorpayButton.jsx` is hardcoded as `'test_key'` rather than dynamically pulling from an environment variable (e.g., `import.meta.env.VITE_RAZORPAY_KEY_ID`).
+* **Single Pizza Limitation (No Cart):** The `OrderContext` overwrites the `orderData` state every time a pizza is built. Because there is no cart system designed to hold an array of pizzas, users are forced to checkout and pay for exactly one pizza at a time.

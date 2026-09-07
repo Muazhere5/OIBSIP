@@ -13,7 +13,7 @@ const UserDashboard = () => {
             name: 'Margherita Classic',
             description: 'Simple and elegant. Classic tomato sauce with fresh mozzarella.',
             price: 15,
-            image: '🍕',
+            image: 'https://images.unsplash.com/photo-1513104890138-7c749659a591?w=500&q=80',
             base: 'Thin Crust',
             sauce: 'Classic Tomato',
             cheese: 'Mozzarella',
@@ -24,7 +24,7 @@ const UserDashboard = () => {
             name: 'Pepperoni Power',
             description: 'Loaded with premium pepperoni and extra cheese.',
             price: 18,
-            image: '🍕',
+            image: 'https://images.unsplash.com/photo-1565299624946-b28f40a0ae38?w=500&q=80',
             base: 'Classic Hand Tossed',
             sauce: 'Classic Tomato',
             cheese: 'Extra Cheese',
@@ -35,7 +35,7 @@ const UserDashboard = () => {
             name: 'Veggie Supreme',
             description: 'A garden delight with olives, onions, bell peppers, and mushrooms.',
             price: 17,
-            image: '🥗',
+            image: 'https://images.unsplash.com/photo-1604382354936-07c5d9983bd3?w=500&q=80',
             base: 'Cheese Burst',
             sauce: 'Classic Tomato',
             cheese: 'Mozzarella',
@@ -66,8 +66,8 @@ const UserDashboard = () => {
             <div className="pizza-menu-grid">
                 {presetPizzas.map(pizza => (
                     <div key={pizza.id} className="pizza-card">
-                        <div className="pizza-image-placeholder">
-                            {pizza.image}
+                        <div className="pizza-image-placeholder" style={{ padding: 0, height: '200px', overflow: 'hidden' }}>
+                            <img src={pizza.image} alt={pizza.name} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
                         </div>
                         <div className="pizza-info">
                             <h3>{pizza.name}</h3>

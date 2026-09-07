@@ -24,7 +24,7 @@ const UserLogin = () => {
         e.preventDefault();
         setErrorMsg('');
         try {
-            const response = await axios.post('http://localhost:5000/api/users/login', formData);
+            const response = await axios.post(`${import.meta.env.VITE_API_URL}/api/users/login`, formData);
             login(response.data);
             navigate('/dashboard');
         } catch (error) {
