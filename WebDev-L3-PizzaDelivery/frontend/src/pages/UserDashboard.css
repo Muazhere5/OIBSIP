@@ -1,6 +1,7 @@
 .dashboard-container {
     padding: 40px;
-    background-color: #111;
+    background: url('https://images.unsplash.com/photo-1590947132387-155cc02f3212?w=1600&q=80') no-repeat center center/cover;
+    background-attachment: fixed;
     min-height: 100vh;
     color: white;
 }
@@ -57,12 +58,13 @@
 }
 
 .pizza-card {
-    background-color: #1a1a1a;
+    background: rgba(0, 0, 0, 0.7);
+    backdrop-filter: blur(10px);
     border-radius: 15px;
     overflow: hidden;
     box-shadow: 0 10px 20px rgba(0,0,0,0.4);
     transition: transform 0.3s;
-    border: 1px solid #333;
+    border: 1px solid rgba(255,255,255,0.2);
 }
 
 .pizza-card:hover {

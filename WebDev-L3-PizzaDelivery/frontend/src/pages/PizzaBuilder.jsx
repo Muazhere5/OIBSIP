@@ -44,9 +44,13 @@ const PizzaBuilder = () => {
     };
 
     return (
-        <div className="builder-container">
-            <div className="builder-content">
-                <h1 className="builder-header">Build Your Masterpiece</h1>
+        <div className="builder-container parallax-bg">
+            <div className="floating-pizza pizza-1">🍕</div>
+            <div className="floating-pizza pizza-2">🍕</div>
+            <div className="floating-pizza pizza-3">🍕</div>
+            
+            <div className="builder-content glassmorphism-card">
+                <h1 className="builder-header high-contrast-text">Build Your Masterpiece</h1>
                 
                 <BaseSelector selectedBase={selectedBase} setSelectedBase={setSelectedBase} />
                 <SauceSelector selectedSauce={selectedSauce} setSelectedSauce={setSelectedSauce} />

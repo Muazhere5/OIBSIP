@@ -1,0 +1,57 @@
+.cms-container {
+    background: rgba(255, 255, 255, 0.1);
+    padding: 2rem;
+    border-radius: 10px;
+}
+
+.ad-list {
+    list-style: none;
+    padding: 0;
+}
+
+.ad-list li {
+    background: rgba(0,0,0,0.5);
+    padding: 1rem;
+    margin-bottom: 0.5rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-radius: 5px;
+}
+
+.remove-btn {
+    background-color: #ff4444;
+    color: white;
+    border: none;
+    padding: 0.3rem 0.6rem;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.add-ad-controls {
+    display: flex;
+    gap: 1rem;
+    margin-top: 1rem;
+}
+
+.add-ad-controls input {
+    flex: 1;
+    padding: 0.8rem;
+    border-radius: 5px;
+    border: none;
+}
+
+.add-btn, .save-settings-btn {
+    background-color: #ff6600;
+    color: white;
+    border: none;
+    padding: 0.8rem 1.5rem;
+    border-radius: 5px;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+.save-settings-btn {
+    margin-top: 2rem;
+    width: 100%;
+}

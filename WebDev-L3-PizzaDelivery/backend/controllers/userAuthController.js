@@ -37,11 +37,48 @@ const loginUser = async (req, res) => {
         if (!isMatch) {
             return res.status(401).json({ message: 'Invalid credentials' });
         }
-        const token = jwt.sign({ id: user._id, role: user.role }, process.env.JWT_SECRET, { expiresIn: process.env.JWT_EXPIRE });
+        if (!user.isApproved) {
+            return res.status(403).json({ message: 'Account pending approval from Admin' });
+        }
+        const token = jwt.sign({ id: user._id, role: user.role }, process.env.JWT_SECRET, { expiresIn: process.env.JWT_EXPIRE || '1d' });
         res.status(200).json({ _id: user._id, name: user.name, email: user.email, token });
     } catch (error) {
         console.error(error.message);
         res.status(500).json({ message: 'Server error' });
+    }
+};
+
+const googleAuth = async (req, res) => {
+    try {
+        const { token } = req.body;
+        const decoded = jwt.decode(token);
+        if (!decoded || !decoded.email) {
+            return res.status(400).json({ message: 'Invalid Google token' });
+        }
+        const { email, name } = decoded;
+        
+        let user = await UserModel.findOne({ email });
+        if (!user) {
+            const randomPassword = crypto.randomBytes(16).toString('hex');
+            const salt = await bcrypt.genSalt(10);
+            const hashedPassword = await bcrypt.hash(randomPassword, salt);
+            user = await UserModel.create({
+                name,
+                email,
+                password: hashedPassword,
+                isApproved: false
+            });
+        }
+
+        if (!user.isApproved) {
+            return res.status(403).json({ message: 'Account pending approval from Admin' });
+        }
+
+        const jwtToken = jwt.sign({ id: user._id, role: user.role }, process.env.JWT_SECRET, { expiresIn: process.env.JWT_EXPIRE || '1d' });
+        res.status(200).json({ _id: user._id, name: user.name, email: user.email, token: jwtToken });
+    } catch (error) {
+        console.error(error.message);
+        res.status(500).json({ message: 'Google Authentication failed' });
     }
 };
 
@@ -87,4 +124,4 @@ const resetPassword = async (req, res) => {
     }
 };
 
-module.exports = { registerUser, loginUser, forgotPassword, resetPassword };
+module.exports = { registerUser, loginUser, googleAuth, forgotPassword, resetPassword };
