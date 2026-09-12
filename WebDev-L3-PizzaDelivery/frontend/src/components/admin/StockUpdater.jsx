@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from '../../utils/api';
+import toast from 'react-hot-toast';
 import './StockUpdater.css';
 
 const StockUpdater = ({ onUpdate }) => {
@@ -26,16 +27,23 @@ const StockUpdater = ({ onUpdate }) => {
     return () => controller.abort();
   }, []);
 
+  const [loading, setLoading] = useState(false);
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (!selectedItem || quantity === '') return;
+    setLoading(true);
 
     try {
       await axios.put(`/api/inventory/${selectedItem}`, { quantity: Number(quantity) });
       setQuantity('');
+      toast.success('Stock updated successfully!');
       if (onUpdate) onUpdate();
     } catch (err) {
+      toast.error('Failed to update stock');
       console.error(err);
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -56,7 +64,9 @@ const StockUpdater = ({ onUpdate }) => {
           required 
           min="0"
         />
-        <button type="submit" className="update-btn">Update</button>
+        <button type="submit" className="update-btn" disabled={loading}>
+            {loading ? 'Updating...' : 'Update'}
+        </button>
       </form>
     </div>
   );

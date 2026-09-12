@@ -24,7 +24,7 @@ const RazorpayButton = () => {
                 key: import.meta.env.VITE_RAZORPAY_KEY_ID,
                 amount: order.amount,
                 currency: 'USD',
-                name: 'Pizza Delivery',
+                name: 'PIZZARELIA',
                 description: 'Pizza Order Payment',
                 order_id: order.id,
                 handler: async function (response) {

@@ -5,7 +5,7 @@ import './UserDashboard.css';
 
 const UserDashboard = () => {
     const navigate = useNavigate();
-    const { setOrderData } = useContext(OrderContext);
+    
 
     const presetPizzas = [
         {
@@ -43,15 +43,17 @@ const UserDashboard = () => {
         }
     ];
 
+    const { addToCart } = useContext(OrderContext);
+
     const handleOrderPreset = (pizza) => {
-        setOrderData({
+        addToCart({
+            name: pizza.name,
             base: pizza.base,
             sauce: pizza.sauce,
             cheese: pizza.cheese,
             veggies: pizza.veggies,
             total: pizza.price
         });
-        navigate('/checkout');
     };
 
     return (
@@ -82,7 +84,7 @@ const UserDashboard = () => {
                             <p>{pizza.description}</p>
                             <div className="pizza-footer">
                                 <span className="pizza-price">${pizza.price}</span>
-                                <button className="order-preset-btn" onClick={() => handleOrderPreset(pizza)}>Order Now</button>
+                                <button className="order-preset-btn" onClick={() => handleOrderPreset(pizza)}>Add to Cart 🍕</button>
                             </div>
                         </div>
                     </div>

@@ -3,6 +3,7 @@ import axios from '../utils/api';
 import { useNavigate, Link } from 'react-router-dom';
 import { AuthContext } from '../context/AuthContext';
 import { GoogleLogin } from '@react-oauth/google';
+import toast from 'react-hot-toast';
 import './UserLogin.css';
 
 const UserLogin = () => {
@@ -14,6 +15,8 @@ const UserLogin = () => {
     const navigate = useNavigate();
     const { login } = useContext(AuthContext);
 
+    const [loading, setLoading] = useState(false);
+
     const handleChange = (e) => {
         setFormData({
             ...formData,
@@ -24,24 +27,36 @@ const UserLogin = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
         setErrorMsg('');
+        setLoading(true);
         try {
             const response = await axios.post(`${import.meta.env.VITE_API_URL}/api/users/login`, formData);
             login(response.data);
+            toast.success('Login Successful!');
             navigate('/dashboard');
         } catch (error) {
-            setErrorMsg(error.response?.data?.message || 'Login failed');
+            const msg = error.response?.data?.message || 'Login failed';
+            setErrorMsg(msg);
+            toast.error(msg);
+        } finally {
+            setLoading(false);
         }
     };
 
     const handleGoogleSuccess = async (credentialResponse) => {
+        setLoading(true);
         try {
             const response = await axios.post(`${import.meta.env.VITE_API_URL}/api/users/google`, {
                 token: credentialResponse.credential
             });
             login(response.data);
+            toast.success('Google Login Successful!');
             navigate('/dashboard');
         } catch (error) {
-            setErrorMsg(error.response?.data?.message || 'Google Login failed');
+            const msg = error.response?.data?.message || 'Google Login failed';
+            setErrorMsg(msg);
+            toast.error(msg);
+        } finally {
+            setLoading(false);
         }
     };
 
@@ -67,7 +82,9 @@ const UserLogin = () => {
                         onChange={handleChange}
                         required
                     />
-                    <button type="submit" className="login-button">Login</button>
+                    <button type="submit" className="login-button" disabled={loading}>
+                        {loading ? 'Processing...' : 'Login'}
+                    </button>
                 </form>
                 
                 <div style={{ marginTop: '20px', display: 'flex', justifyContent: 'center' }}>

@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from '../../utils/api';
+import toast from 'react-hot-toast';
 import './PlatformCMS.css';
 
 const PlatformCMS = () => {
@@ -40,10 +41,10 @@ const PlatformCMS = () => {
             await axios.put(`${import.meta.env.VITE_API_URL}/api/admin/settings`, { slidingAds }, {
                 headers: { Authorization: `Bearer ${token}` }
             });
-            alert('Settings saved successfully!');
+            toast.success('Settings saved successfully!');
             setNetworkError('');
         } catch (error) {
-            setNetworkError('Cannot save settings. Network error.');
+            toast.error('Error saving settings');
         }
     };
 

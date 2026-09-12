@@ -23,11 +23,12 @@ const Navbar = () => {
     return (
         <nav className="navbar">
             <div className="navbar-brand" onClick={() => navigate('/')}>
-                Pizza Delivery
+                ?? PIZZARELIA
             </div>
             <ul className="navbar-links">
                 <li onClick={() => handleProtectedNavigation('/')}>Home</li>
                 <li onClick={() => handleProtectedNavigation('/dashboard')}>Menu</li>
+                <li onClick={() => handleProtectedNavigation('/cart')}>Cart 🛒</li>
                 {!user ? (
                     <div className="nav-auth-buttons">
                         <button className="nav-btn btn-login" onClick={() => navigate('/login')}>Login</button>

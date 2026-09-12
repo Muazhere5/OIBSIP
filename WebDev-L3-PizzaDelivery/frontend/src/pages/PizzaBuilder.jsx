@@ -13,8 +13,7 @@ const PizzaBuilder = () => {
     const [selectedCheese, setSelectedCheese] = useState('Mozzarella');
     const [selectedVeggies, setSelectedVeggies] = useState([]);
     
-    const { setOrderData } = useContext(OrderContext);
-    const navigate = useNavigate();
+    const { addToCart } = useContext(OrderContext);
 
     const basePrices = {
         'Thin Crust': 10,
@@ -32,15 +31,16 @@ const PizzaBuilder = () => {
         return total.toFixed(2);
     };
 
-    const handleCheckout = () => {
-        setOrderData({
+    const handleAddToCart = () => {
+        addToCart({
+            name: 'Custom Pizza',
             base: selectedBase,
             sauce: selectedSauce,
             cheese: selectedCheese,
             veggies: selectedVeggies,
             total: calculateTotal()
         });
-        navigate('/checkout');
+        // reset to defaults if needed, or leave it
     };
 
     return (
@@ -59,7 +59,7 @@ const PizzaBuilder = () => {
 
                 <div className="checkout-section">
                     <h2 className="total-price">Total: ${calculateTotal()}</h2>
-                    <button className="checkout-btn" onClick={handleCheckout}>Proceed to Checkout</button>
+                    <button className="checkout-btn" onClick={handleAddToCart}>Add to Cart 🍕</button>
                 </div>
             </div>
         </div>

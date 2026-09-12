@@ -3,6 +3,7 @@ import axios from '../utils/api';
 import { useNavigate, Link } from 'react-router-dom';
 import { AuthContext } from '../context/AuthContext';
 import { GoogleLogin } from '@react-oauth/google';
+import toast from 'react-hot-toast';
 import './UserRegister.css';
 
 const UserRegister = () => {
@@ -15,6 +16,8 @@ const UserRegister = () => {
     const navigate = useNavigate();
     const { login } = useContext(AuthContext);
 
+    const [loading, setLoading] = useState(false);
+
     const handleChange = (e) => {
         setFormData({
             ...formData,
@@ -25,23 +28,35 @@ const UserRegister = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
         setErrorMsg('');
+        setLoading(true);
         try {
             await axios.post(`${import.meta.env.VITE_API_URL}/api/users/register`, formData);
+            toast.success('Registration Successful!');
             navigate('/login');
         } catch (error) {
-            setErrorMsg(error.response?.data?.message || 'Registration failed');
+            const msg = error.response?.data?.message || 'Registration failed';
+            setErrorMsg(msg);
+            toast.error(msg);
+        } finally {
+            setLoading(false);
         }
     };
 
     const handleGoogleSuccess = async (credentialResponse) => {
+        setLoading(true);
         try {
             const response = await axios.post(`${import.meta.env.VITE_API_URL}/api/users/google`, {
                 token: credentialResponse.credential
             });
             login(response.data);
+            toast.success('Google Registration Successful!');
             navigate('/dashboard');
         } catch (error) {
-            setErrorMsg(error.response?.data?.message || 'Google Login failed');
+            const msg = error.response?.data?.message || 'Google Login failed';
+            setErrorMsg(msg);
+            toast.error(msg);
+        } finally {
+            setLoading(false);
         }
     };
 
@@ -75,7 +90,9 @@ const UserRegister = () => {
                         onChange={handleChange}
                         required
                     />
-                    <button type="submit" className="register-button">Register</button>
+                    <button type="submit" className="register-button" disabled={loading}>
+                        {loading ? 'Processing...' : 'Register'}
+                    </button>
                 </form>
 
                 <div style={{ marginTop: '20px', display: 'flex', justifyContent: 'center' }}>

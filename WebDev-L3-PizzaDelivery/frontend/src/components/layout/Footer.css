@@ -1,40 +1,74 @@
 .footer {
-    background-color: #2a2a2a;
-    color: #ffca28;
-    padding: 2rem;
-    text-align: center;
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    margin-top: auto;
+    background: linear-gradient(to right, #1a0f0a, #3b1c0a);
+    color: #fff8dc;
+    padding: 3rem 2rem 1.5rem;
+    border-top: 5px solid #e65c00;
+    position: relative;
+    overflow: hidden;
+    font-family: 'Poppins', sans-serif;
 }
 
-.footer-content p {
-    font-size: 1.2rem;
-    margin-bottom: 1rem;
+.footer::before {
+    content: '??';
+    position: absolute;
+    top: -20px;
+    right: 5%;
+    font-size: 150px;
+    opacity: 0.05;
+    transform: rotate(30deg);
 }
 
-.footer-links {
-    display: flex;
-    justify-content: center;
+.footer-top {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
     gap: 2rem;
+    max-width: 1200px;
+    margin: 0 auto;
+    position: relative;
+    z-index: 2;
 }
 
-.footer-links span {
-    cursor: pointer;
-    transition: color 0.2s;
+.footer-col h3 {
+    color: #ffca28;
+    font-size: 1.5rem;
+    margin-bottom: 1rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    border-bottom: 2px dashed #ffca28;
+    display: inline-block;
+    padding-bottom: 0.5rem;
 }
 
-.footer-links span:hover {
-    color: #ffffff;
+.footer-col p {
+    line-height: 1.8;
+    color: #cccccc;
 }
 
 .footer-link {
-  color: white;
-  text-decoration: none;
-  cursor: pointer;
-  transition: all 0.3s ease;
+    display: block;
+    color: #cccccc;
+    text-decoration: none;
+    margin-bottom: 0.8rem;
+    transition: all 0.3s ease;
 }
+
 .footer-link:hover {
-  color: #ffd700;
-  transform: scale(1.05);
-  text-shadow: 0 0 8px rgba(255, 215, 0, 0.5);
+    color: #ffca28;
+    transform: translateX(10px);
+}
+
+.footer-bottom {
+    text-align: center;
+    margin-top: 3rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.footer-tagline {
+    font-family: 'Courier New', Courier, monospace;
+    color: #e65c00;
+    font-size: 1.8rem;
+    letter-spacing: 3px;
+    margin: 0;
+    text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
 }

@@ -1,10 +1,10 @@
-# Level 3 - Pizza Delivery Full-Stack Application
+# Level 3 - PIZZARELIA Full-Stack Application
 
 ## Status: Ready for Submission 🍕
 This project has undergone an exhaustive multi-phase diagnostic audit and Omni-Patch resilience cycle. It strictly adheres to all Oasis Infobyte Level 3 standards. The architecture features zero memory leaks, robust frontend and backend error boundaries, automated inventory transactions, encrypted authentication, and a heavily optimized, visually immersive user interface. The entire codebase strictly enforces a zero-comments policy.
 
 ## Overview
-This platform is a comprehensive full-stack pizza delivery web application built as the final Level 3 task for the Oasis Infobyte Internship. It features a rich, interactive user experience for building custom pizzas, real-time order tracking, and a robust admin dashboard for managing inventory and incoming orders.
+This platform is a comprehensive full-stack PIZZARELIA web application built as the final Level 3 task for the Oasis Infobyte Internship. It features a rich, interactive user experience for building custom pizzas, real-time order tracking, and a robust admin dashboard for managing inventory and incoming orders.
 
 ## Tech Stack
 - **MongoDB** (with Session Transactions)

@@ -7,12 +7,15 @@ import { AuthProvider } from './context/AuthContext.jsx'
 import { OrderProvider } from './context/OrderContext.jsx'
 import ErrorBoundary from './components/layout/ErrorBoundary.jsx'
 
+import { Toaster } from 'react-hot-toast'
+
 createRoot(document.getElementById('root')).render(
   <StrictMode>
     <GoogleOAuthProvider clientId="dummy-client-id-for-testing">
       <ErrorBoundary>
         <AuthProvider>
           <OrderProvider>
+            <Toaster position="top-center" />
             <App />
           </OrderProvider>
         </AuthProvider>

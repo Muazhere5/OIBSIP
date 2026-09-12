@@ -18,30 +18,35 @@ import AdminRoute from './components/layout/AdminRoute';
 
 import Home from './pages/Home';
 import Checkout from './pages/Checkout';
+import Cart from './pages/Cart';
+import RouteLoader from './components/layout/RouteLoader';
 
 function App() {
-  return (
+    return (
     <BrowserRouter>
-      <div className="app-container">
-        <Navbar />
-        <div className="main-content">
-          <Routes>
-            <Route path="/" element={<Home />} />
-            <Route path="/register" element={<UserRegister />} />
-            <Route path="/login" element={<UserLogin />} />
-            <Route path="/forgot-password" element={<ForgotPassword />} />
-            <Route path="/reset-password/:token" element={<ResetPassword />} />
-            <Route path="/dashboard" element={<PrivateRoute><UserDashboard /></PrivateRoute>} />
-            <Route path="/builder" element={<PizzaBuilder />} />
-            <Route path="/checkout" element={<Checkout />} />
-            <Route path="/live-tracker" element={<PrivateRoute><LiveTracker /></PrivateRoute>} />
-            <Route path="/admin" element={<AdminLogin />} />
-            <Route path="/admin-dashboard" element={<AdminRoute><AdminDashboard /></AdminRoute>} />
-            <Route path="*" element={<NotFound />} />
-          </Routes>
+      <RouteLoader>
+        <div className="app-container">
+          <Navbar />
+          <div className="main-content">
+            <Routes>
+              <Route path="/" element={<Home />} />
+              <Route path="/register" element={<UserRegister />} />
+              <Route path="/login" element={<UserLogin />} />
+              <Route path="/forgot-password" element={<ForgotPassword />} />
+              <Route path="/reset-password/:token" element={<ResetPassword />} />
+              <Route path="/dashboard" element={<PrivateRoute><UserDashboard /></PrivateRoute>} />
+              <Route path="/cart" element={<PrivateRoute><Cart /></PrivateRoute>} />
+              <Route path="/builder" element={<PizzaBuilder />} />
+              <Route path="/checkout" element={<Checkout />} />
+              <Route path="/live-tracker" element={<PrivateRoute><LiveTracker /></PrivateRoute>} />
+              <Route path="/admin" element={<AdminLogin />} />
+              <Route path="/admin-dashboard" element={<AdminRoute><AdminDashboard /></AdminRoute>} />
+              <Route path="*" element={<NotFound />} />
+            </Routes>
+          </div>
+          <Footer />
         </div>
-        <Footer />
-      </div>
+      </RouteLoader>
     </BrowserRouter>
   );
 }

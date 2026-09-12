@@ -1,0 +1,71 @@
+.notfound-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 85vh;
+    text-align: center;
+    padding: 2rem;
+}
+
+.notfound-card {
+    max-width: 600px;
+    padding: 4rem 2rem;
+    animation: slideUp 0.8s ease-out;
+}
+
+.dropped-pizza {
+    font-size: 100px;
+    margin-bottom: 1rem;
+    animation: dropAndRoll 2s ease-out forwards;
+    transform-origin: bottom center;
+}
+
+@keyframes dropAndRoll {
+    0% { transform: translateY(-200px) rotate(-180deg); opacity: 0; }
+    50% { transform: translateY(0) rotate(0deg); opacity: 1; }
+    70% { transform: rotate(15deg); }
+    100% { transform: rotate(45deg) translateY(20px); }
+}
+
+.error-code {
+    font-size: 120px;
+    margin: 0;
+    background: -webkit-linear-gradient(#ff6600, #ffca28);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    font-family: 'Poppins', sans-serif;
+    font-weight: 900;
+    text-shadow: 0 10px 30px rgba(255, 102, 0, 0.3);
+}
+
+.error-title {
+    font-size: 32px;
+    color: #fff;
+    margin: 1rem 0;
+    font-family: 'Poppins', sans-serif;
+}
+
+.error-desc {
+    font-size: 18px;
+    color: #ccc;
+    margin-bottom: 3rem;
+}
+
+.return-btn {
+    display: inline-block;
+    padding: 1rem 2.5rem;
+    background: linear-gradient(135deg, #ff4444, #ff6600);
+    color: #fff;
+    text-decoration: none;
+    border-radius: 50px;
+    font-size: 20px;
+    font-weight: bold;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 15px rgba(255, 68, 68, 0.4);
+}
+
+.return-btn:hover {
+    transform: scale(1.1) translateY(-5px);
+    box-shadow: 0 8px 25px rgba(255, 68, 68, 0.6);
+    color: white;
+}
