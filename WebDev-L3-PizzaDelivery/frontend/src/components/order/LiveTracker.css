@@ -134,3 +134,20 @@
   50% { transform: translateY(-10px); }
   100% { transform: translateY(0); }
 }
+
+.connection-lost-banner {
+  background: linear-gradient(90deg, #ff9800, #ff5722);
+  color: white;
+  padding: 10px 20px;
+  border-radius: 8px;
+  font-weight: bold;
+  margin-bottom: 20px;
+  animation: pulse-glow 1.5s infinite;
+  text-align: center;
+  width: 100%;
+}
+
+.pizza-visual.disconnected {
+  filter: grayscale(100%);
+  opacity: 0.5;
+}

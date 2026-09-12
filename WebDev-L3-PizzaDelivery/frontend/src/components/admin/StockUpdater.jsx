@@ -8,18 +8,23 @@ const StockUpdater = ({ onUpdate }) => {
   const [quantity, setQuantity] = useState('');
 
   useEffect(() => {
-    fetchItems();
-  }, []);
+    const controller = new AbortController();
+    
+    const fetchItems = async () => {
+      try {
+        const res = await axios.get(`${import.meta.env.VITE_API_URL}/api/inventory`, { signal: controller.signal });
+        setItems(res.data);
+        if (res.data.length > 0) setSelectedItem(res.data[0]._id);
+      } catch (err) {
+        if (err.name !== 'CanceledError' && err.code !== 'ERR_CANCELED') {
+            console.error(err);
+        }
+      }
+    };
 
-  const fetchItems = async () => {
-    try {
-      const res = await axios.get(`${import.meta.env.VITE_API_URL}/api/inventory`);
-      setItems(res.data);
-      if (res.data.length > 0) setSelectedItem(res.data[0]._id);
-    } catch (err) {
-      console.error(err);
-    }
-  };
+    fetchItems();
+    return () => controller.abort();
+  }, []);
 
   const handleSubmit = async (e) => {
     e.preventDefault();

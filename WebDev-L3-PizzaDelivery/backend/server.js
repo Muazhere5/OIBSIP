@@ -11,6 +11,14 @@ const configureSocket = require('./config/socketConfig');
 const app = express();
 const server = http.createServer(app);
 
+const requiredEnvs = ['MONGO_URI', 'JWT_SECRET', 'VITE_API_URL', 'RAZORPAY_KEY_ID', 'RAZORPAY_KEY_SECRET', 'GOOGLE_CLIENT_ID'];
+for (const env of requiredEnvs) {
+    if (!process.env[env]) {
+        console.error(`CRITICAL: Missing environment variable ${env}`);
+        process.exit(1);
+    }
+}
+
 connectDB();
 
 app.use(cors({ origin: ['http://localhost:5173', 'http://127.0.0.1:5173'], credentials: true }));

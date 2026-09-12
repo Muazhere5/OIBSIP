@@ -1,5 +1,6 @@
 import React from 'react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import './App.css';
 import Navbar from './components/layout/Navbar';
 import Footer from './components/layout/Footer';
 import UserRegister from './pages/UserRegister';
@@ -21,9 +22,9 @@ import Checkout from './pages/Checkout';
 function App() {
   return (
     <BrowserRouter>
-      <div style={{ display: 'flex', flexDirection: 'column', minHeight: '100vh' }}>
+      <div className="app-container">
         <Navbar />
-        <div style={{ flex: 1 }}>
+        <div className="main-content">
           <Routes>
             <Route path="/" element={<Home />} />
             <Route path="/register" element={<UserRegister />} />

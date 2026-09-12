@@ -67,7 +67,15 @@ const UserDashboard = () => {
                 {presetPizzas.map(pizza => (
                     <div key={pizza.id} className="pizza-card">
                         <div className="pizza-image-placeholder" style={{ padding: 0, height: '200px', overflow: 'hidden' }}>
-                            <img src={pizza.image} alt={pizza.name} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+                            <img 
+                                src={pizza.image} 
+                                alt={pizza.name} 
+                                style={{ width: '100%', height: '100%', objectFit: 'cover' }} 
+                                onError={(e) => { 
+                                    e.target.onerror = null; 
+                                    e.target.src = 'data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="500" height="200"><defs><linearGradient id="g" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="%23ff4444"/><stop offset="100%" stop-color="%23ff9800"/></linearGradient></defs><rect width="100%" height="100%" fill="url(%23g)"/><text x="50%" y="50%" dominant-baseline="middle" text-anchor="middle" fill="white" font-size="30" font-family="sans-serif">🍕 Pizza Time</text></svg>';
+                                }} 
+                            />
                         </div>
                         <div className="pizza-info">
                             <h3>{pizza.name}</h3>

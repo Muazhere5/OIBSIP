@@ -12,17 +12,21 @@ const Home = () => {
     ]);
 
     useEffect(() => {
+        const controller = new AbortController();
         const fetchAds = async () => {
             try {
-                const res = await axios.get(`${import.meta.env.VITE_API_URL}/api/admin/settings`);
+                const res = await axios.get(`${import.meta.env.VITE_API_URL}/api/admin/settings`, { signal: controller.signal });
                 if (res.data && res.data.slidingAds && res.data.slidingAds.length > 0) {
                     setAds(res.data.slidingAds);
                 }
             } catch (error) {
-                console.error(error);
+                if (error.name !== 'CanceledError' && error.code !== 'ERR_CANCELED') {
+                    console.error(error);
+                }
             }
         };
         fetchAds();
+        return () => controller.abort();
     }, []);
 
     useEffect(() => {

@@ -5,13 +5,23 @@ import './LiveTracker.css';
 const LiveTracker = () => {
   const [orderStatus, setOrderStatus] = useState('Received');
 
+  const [isConnected, setIsConnected] = useState(true);
+
   useEffect(() => {
     const socket = io(`${import.meta.env.VITE_API_URL}`);
     
+    socket.on('connect', () => {
+      setIsConnected(true);
+    });
+
     socket.on('order-status-updated', (data) => {
       if (data && data.status) {
         setOrderStatus(data.status);
       }
+    });
+
+    socket.on('disconnect', () => {
+      setIsConnected(false);
     });
 
     return () => {
@@ -23,7 +33,12 @@ const LiveTracker = () => {
 
   return (
     <div className="live-tracker-container">
-      <div className={`pizza-visual ${orderStatus.replace(/\s+/g, '-').toLowerCase()}`}>
+      {!isConnected && (
+        <div className="connection-lost-banner">
+          Connection Lost - Reconnecting...
+        </div>
+      )}
+      <div className={`pizza-visual ${orderStatus.replace(/\s+/g, '-').toLowerCase()} ${!isConnected ? 'disconnected' : ''}`}>
         <div className="pizza-circle"></div>
       </div>
       <div className="timeline">

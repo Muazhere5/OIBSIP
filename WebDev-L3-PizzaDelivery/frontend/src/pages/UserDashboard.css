@@ -124,3 +124,16 @@
 .order-preset-btn:hover {
     background-color: #d35400;
 }
+
+.fallback-image {
+  background: linear-gradient(135deg, #ff4444, #ff9800);
+  width: 100%;
+  height: 200px;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-weight: bold;
+  font-size: 24px;
+}

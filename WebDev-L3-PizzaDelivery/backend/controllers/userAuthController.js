@@ -13,7 +13,7 @@ const registerUser = async (req, res) => {
         if (userExists) {
             return res.status(400).json({ message: 'User already exists' });
         }
-        const salt = await bcrypt.genSalt(10);
+        const salt = await bcrypt.genSalt(12);
         const hashedPassword = await bcrypt.hash(password, salt);
         const user = await UserModel.create({
             name,
@@ -67,7 +67,7 @@ const googleAuth = async (req, res) => {
         let user = await UserModel.findOne({ email });
         if (!user) {
             const randomPassword = crypto.randomBytes(16).toString('hex');
-            const salt = await bcrypt.genSalt(10);
+            const salt = await bcrypt.genSalt(12);
             const hashedPassword = await bcrypt.hash(randomPassword, salt);
             user = await UserModel.create({
                 name,
@@ -120,7 +120,7 @@ const resetPassword = async (req, res) => {
 
         if (!user) return res.status(400).json({ message: 'Invalid or expired token' });
 
-        const salt = await bcrypt.genSalt(10);
+        const salt = await bcrypt.genSalt(12);
         user.password = await bcrypt.hash(req.body.password, salt);
         user.resetPasswordToken = undefined;
         user.resetPasswordExpire = undefined;
