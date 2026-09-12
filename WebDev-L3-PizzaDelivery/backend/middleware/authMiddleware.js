@@ -15,8 +15,17 @@ const protectRoute = (req, res, next) => {
         req.user = decoded;
         next();
     } catch (error) {
+        console.error(error);
         return res.status(401).json({ message: 'Token is invalid or expired' });
     }
 };
 
-module.exports = { protectRoute };
+const isAdmin = (req, res, next) => {
+    if (req.user && req.user.role === 'admin') {
+        next();
+    } else {
+        return res.status(403).json({ message: 'Not authorized as an admin' });
+    }
+};
+
+module.exports = { protectRoute, isAdmin };

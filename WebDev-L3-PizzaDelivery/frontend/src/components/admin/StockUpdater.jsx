@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import axios from 'axios';
+import axios from '../../utils/api';
 import './StockUpdater.css';
 
 const StockUpdater = ({ onUpdate }) => {
@@ -26,7 +26,7 @@ const StockUpdater = ({ onUpdate }) => {
     if (!selectedItem || quantity === '') return;
 
     try {
-      await axios.put(`http://localhost:5000/api/inventory/${selectedItem}`, { quantity: Number(quantity) });
+      await axios.put(`/api/inventory/${selectedItem}`, { quantity: Number(quantity) });
       setQuantity('');
       if (onUpdate) onUpdate();
     } catch (err) {

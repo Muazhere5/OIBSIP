@@ -13,7 +13,7 @@ const createRazorpayOrder = async (req, res) => {
         const order = await razorpay.orders.create(options);
         res.status(200).json(order);
     } catch (error) {
-        console.error(error.message);
+        console.error(error);
         res.status(500).json({ message: 'Error creating Razorpay order' });
     }
 };
@@ -30,13 +30,6 @@ const verifyPaymentAndSave = async (req, res) => {
             return res.status(400).json({ message: 'Payment verification failed' });
         }
 
-        const newOrder = await OrderModel.create({
-            userId: userId,
-            items: [orderData],
-            totalAmount: orderData.total,
-            status: 'Received'
-        });
-
         const itemsToDecrement = [];
         if (orderData.base) itemsToDecrement.push(orderData.base);
         if (orderData.sauce) itemsToDecrement.push(orderData.sauce);
@@ -46,16 +39,55 @@ const verifyPaymentAndSave = async (req, res) => {
         }
 
         const InventoryModel = require('../models/InventoryModel');
-        for (const itemName of itemsToDecrement) {
-            await InventoryModel.findOneAndUpdate(
-                { name: itemName, quantity: { $gt: 0 } },
-                { $inc: { quantity: -1 } }
-            );
+        const mongoose = require('mongoose');
+
+        let session;
+        try {
+            session = await mongoose.startSession();
+            session.startTransaction();
+        } catch (err) {
+            session = null;
         }
 
-        res.status(201).json({ message: 'Order placed successfully', orderId: newOrder._id });
+        try {
+            const orderOptions = session ? { session } : {};
+            const newOrder = await OrderModel.create([{
+                userId: userId,
+                items: [orderData],
+                totalAmount: orderData.total,
+                status: 'Received'
+            }], orderOptions);
+
+            for (const itemName of itemsToDecrement) {
+                const queryOptions = { new: true };
+                if (session) queryOptions.session = session;
+
+                const updatedItem = await InventoryModel.findOneAndUpdate(
+                    { name: itemName, quantity: { $gt: 0 } },
+                    { $inc: { quantity: -1 } },
+                    queryOptions
+                );
+                if (!updatedItem) {
+                    throw new Error(`Item ${itemName} is out of stock`);
+                }
+            }
+
+            if (session) {
+                await session.commitTransaction();
+                session.endSession();
+            }
+
+            res.status(201).json({ message: 'Order placed successfully', orderId: newOrder[0]._id });
+        } catch (innerError) {
+            if (session) {
+                await session.abortTransaction();
+                session.endSession();
+            }
+            throw innerError;
+        }
+
     } catch (error) {
-        console.error(error.message);
+        console.error(error);
         res.status(500).json({ message: 'Error verifying payment' });
     }
 };
@@ -65,6 +97,7 @@ const getAllOrders = async (req, res) => {
         const orders = await OrderModel.find().sort({ _id: -1 });
         res.status(200).json(orders);
     } catch (error) {
+        console.error(error);
         res.status(500).json({ message: 'Error fetching orders' });
     }
 };
@@ -86,6 +119,7 @@ const updateOrderStatus = async (req, res) => {
 
         res.status(200).json(updatedOrder);
     } catch (error) {
+        console.error(error);
         res.status(500).json({ message: 'Error updating order status' });
     }
 };

@@ -11,6 +11,9 @@ import AdminDashboard from './pages/AdminDashboard';
 import ForgotPassword from './pages/ForgotPassword';
 import ResetPassword from './pages/ResetPassword';
 import UserDashboard from './pages/UserDashboard';
+import NotFound from './pages/NotFound';
+import PrivateRoute from './components/layout/PrivateRoute';
+import AdminRoute from './components/layout/AdminRoute';
 
 import Home from './pages/Home';
 import Checkout from './pages/Checkout';
@@ -27,12 +30,13 @@ function App() {
             <Route path="/login" element={<UserLogin />} />
             <Route path="/forgot-password" element={<ForgotPassword />} />
             <Route path="/reset-password/:token" element={<ResetPassword />} />
-            <Route path="/dashboard" element={<UserDashboard />} />
+            <Route path="/dashboard" element={<PrivateRoute><UserDashboard /></PrivateRoute>} />
             <Route path="/builder" element={<PizzaBuilder />} />
             <Route path="/checkout" element={<Checkout />} />
-            <Route path="/live-tracker" element={<LiveTracker />} />
+            <Route path="/live-tracker" element={<PrivateRoute><LiveTracker /></PrivateRoute>} />
             <Route path="/admin" element={<AdminLogin />} />
-            <Route path="/admin-dashboard" element={<AdminDashboard />} />
+            <Route path="/admin-dashboard" element={<AdminRoute><AdminDashboard /></AdminRoute>} />
+            <Route path="*" element={<NotFound />} />
           </Routes>
         </div>
         <Footer />

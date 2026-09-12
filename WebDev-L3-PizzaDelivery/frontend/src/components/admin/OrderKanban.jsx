@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import axios from 'axios';
+import axios from '../../utils/api';
 import './OrderKanban.css';
 
 const OrderKanban = () => {
@@ -25,7 +25,7 @@ const OrderKanban = () => {
     else return;
 
     try {
-      await axios.put(`http://localhost:5000/api/orders/${id}/status`, { status: nextStatus });
+      await axios.put(`/api/orders/${id}/status`, { status: nextStatus });
       fetchOrders();
     } catch (err) {
       console.error(err);

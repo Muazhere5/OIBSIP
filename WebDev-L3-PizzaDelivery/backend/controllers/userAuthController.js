@@ -3,6 +3,8 @@ const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const crypto = require('crypto');
 const sendEmail = require('../utils/emailSender');
+const { OAuth2Client } = require('google-auth-library');
+const client = new OAuth2Client(process.env.GOOGLE_CLIENT_ID);
 
 const registerUser = async (req, res) => {
     try {
@@ -21,7 +23,7 @@ const registerUser = async (req, res) => {
         const token = jwt.sign({ id: user._id, role: user.role }, process.env.JWT_SECRET, { expiresIn: process.env.JWT_EXPIRE });
         res.status(201).json({ _id: user._id, name: user.name, email: user.email, token });
     } catch (error) {
-        console.error(error.message);
+        console.error(error);
         res.status(500).json({ message: 'Server error' });
     }
 };
@@ -40,10 +42,10 @@ const loginUser = async (req, res) => {
         if (!user.isApproved) {
             return res.status(403).json({ message: 'Account pending approval from Admin' });
         }
-        const token = jwt.sign({ id: user._id, role: user.role }, process.env.JWT_SECRET, { expiresIn: process.env.JWT_EXPIRE || '1d' });
+        const token = jwt.sign({ id: user._id, role: user.role }, process.env.JWT_SECRET, { expiresIn: process.env.JWT_EXPIRE });
         res.status(200).json({ _id: user._id, name: user.name, email: user.email, token });
     } catch (error) {
-        console.error(error.message);
+        console.error(error);
         res.status(500).json({ message: 'Server error' });
     }
 };
@@ -51,11 +53,16 @@ const loginUser = async (req, res) => {
 const googleAuth = async (req, res) => {
     try {
         const { token } = req.body;
-        const decoded = jwt.decode(token);
-        if (!decoded || !decoded.email) {
+        const ticket = await client.verifyIdToken({
+            idToken: token,
+            audience: process.env.GOOGLE_CLIENT_ID
+        });
+        const payload = ticket.getPayload();
+        
+        if (!payload || !payload.email) {
             return res.status(400).json({ message: 'Invalid Google token' });
         }
-        const { email, name } = decoded;
+        const { email, name } = payload;
         
         let user = await UserModel.findOne({ email });
         if (!user) {
@@ -74,10 +81,10 @@ const googleAuth = async (req, res) => {
             return res.status(403).json({ message: 'Account pending approval from Admin' });
         }
 
-        const jwtToken = jwt.sign({ id: user._id, role: user.role }, process.env.JWT_SECRET, { expiresIn: process.env.JWT_EXPIRE || '1d' });
+        const jwtToken = jwt.sign({ id: user._id, role: user.role }, process.env.JWT_SECRET, { expiresIn: process.env.JWT_EXPIRE });
         res.status(200).json({ _id: user._id, name: user.name, email: user.email, token: jwtToken });
     } catch (error) {
-        console.error(error.message);
+        console.error(error);
         res.status(500).json({ message: 'Google Authentication failed' });
     }
 };
@@ -98,6 +105,7 @@ const forgotPassword = async (req, res) => {
 
         res.status(200).json({ message: 'Email sent' });
     } catch (error) {
+        console.error(error);
         res.status(500).json({ message: 'Error sending email' });
     }
 };
@@ -120,6 +128,7 @@ const resetPassword = async (req, res) => {
 
         res.status(200).json({ message: 'Password reset successful' });
     } catch (error) {
+        console.error(error);
         res.status(500).json({ message: 'Error resetting password' });
     }
 };

@@ -5,6 +5,7 @@ const getAllInventory = async (req, res) => {
         const items = await InventoryModel.find();
         res.status(200).json(items);
     } catch (error) {
+        console.error(error);
         res.status(500).json({ message: 'Error fetching inventory' });
     }
 };
@@ -23,6 +24,7 @@ const updateStock = async (req, res) => {
         }
         res.status(200).json(updatedItem);
     } catch (error) {
+        console.error(error);
         res.status(500).json({ message: 'Error updating stock' });
     }
 };

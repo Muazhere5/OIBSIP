@@ -6,10 +6,13 @@ const orderSchema = new mongoose.Schema({
         ref: 'User',
         required: true
     },
-    items: {
-        type: Array,
-        required: true
-    },
+    items: [{
+        base: { type: String },
+        sauce: { type: String },
+        cheese: { type: String },
+        veggies: [{ type: String }],
+        total: { type: Number }
+    }],
     totalAmount: {
         type: Number,
         required: true
