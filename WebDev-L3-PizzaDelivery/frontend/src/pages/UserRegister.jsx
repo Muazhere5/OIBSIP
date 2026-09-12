@@ -79,14 +79,17 @@ const UserRegister = () => {
                 </form>
 
                 <div style={{ marginTop: '20px', display: 'flex', justifyContent: 'center' }}>
-                    <GoogleLogin 
-                        onSuccess={handleGoogleSuccess} 
-                        onError={() => setErrorMsg('Google Login Failed')}
-                    />
+                    <div lang="en">
+                        <GoogleLogin 
+                            onSuccess={handleGoogleSuccess} 
+                            onError={() => setErrorMsg('Google Login Failed')}
+                            locale="en"
+                        />
+                    </div>
                 </div>
 
                 <div style={{ textAlign: 'center', marginTop: '20px' }}>
-                    <Link to="/login" style={{ color: '#ffccbc', fontSize: '15px', fontWeight: 'bold', textDecoration: 'none' }}>Already have an account? Log In</Link>
+                    <Link to="/login" style={{ color: '#00e5ff', fontSize: '15px', fontWeight: 'bold', textDecoration: 'none', transition: 'all 0.3s' }} className="auth-link-login">Already have an account? Log In</Link>
                 </div>
             </div>
         </div>

@@ -4,8 +4,12 @@ export const OrderContext = createContext();
 
 export const OrderProvider = ({ children }) => {
     const [orderData, setOrderData] = useState(() => {
-        const storedOrder = localStorage.getItem('orderData');
-        return storedOrder ? JSON.parse(storedOrder) : null;
+        try {
+            const storedOrder = localStorage.getItem('orderData');
+            return storedOrder ? JSON.parse(storedOrder) : null;
+        } catch (e) {
+            return null;
+        }
     });
 
     useEffect(() => {

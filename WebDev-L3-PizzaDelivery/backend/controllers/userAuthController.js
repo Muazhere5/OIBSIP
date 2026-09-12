@@ -39,9 +39,6 @@ const loginUser = async (req, res) => {
         if (!isMatch) {
             return res.status(401).json({ message: 'Invalid credentials' });
         }
-        if (!user.isApproved) {
-            return res.status(403).json({ message: 'Account pending approval from Admin' });
-        }
         const token = jwt.sign({ id: user._id, role: user.role }, process.env.JWT_SECRET, { expiresIn: process.env.JWT_EXPIRE });
         res.status(200).json({ _id: user._id, name: user.name, email: user.email, token });
     } catch (error) {
@@ -73,12 +70,8 @@ const googleAuth = async (req, res) => {
                 name,
                 email,
                 password: hashedPassword,
-                isApproved: false
+                isApproved: true
             });
-        }
-
-        if (!user.isApproved) {
-            return res.status(403).json({ message: 'Account pending approval from Admin' });
         }
 
         const jwtToken = jwt.sign({ id: user._id, role: user.role }, process.env.JWT_SECRET, { expiresIn: process.env.JWT_EXPIRE });

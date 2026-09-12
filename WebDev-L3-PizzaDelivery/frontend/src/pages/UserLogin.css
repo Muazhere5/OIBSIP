@@ -64,3 +64,12 @@
     transform: scale(1.05);
     box-shadow: 0 4px 15px rgba(245, 124, 0, 0.4);
 }
+
+.auth-link:hover {
+  color: #ff8888 !important;
+  text-shadow: 0 0 8px rgba(255, 68, 68, 0.8);
+}
+.auth-link-signup:hover {
+  color: #ffffff !important;
+  text-shadow: 0 0 10px #00e5ff;
+}

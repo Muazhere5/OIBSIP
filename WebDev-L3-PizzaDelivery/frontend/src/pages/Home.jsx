@@ -1,5 +1,6 @@
-import React, { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
+import React, { useState, useEffect, useContext } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
+import { AuthContext } from '../context/AuthContext';
 import axios from '../utils/api';
 import './Home.css';
 
@@ -37,11 +38,19 @@ const Home = () => {
         return () => clearInterval(interval);
     }, [ads.length]);
 
+    const navigate = useNavigate();
+    const { user } = useContext(AuthContext);
+
     return (
         <div className="home-container">
             <h1 className="home-title">Hot, Fresh, and Delivered Fast</h1>
             <p className="home-subtitle">Experience the ultimate pizza builder.</p>
-            <Link to="/builder" className="cta-button">Build Your Pizza</Link>
+            <button 
+                onClick={() => navigate(user ? '/builder' : '/login')} 
+                className="cta-button"
+            >
+                Build Your Pizza
+            </button>
 
             <div className="ads-carousel">
                 {ads.map((ad, index) => (

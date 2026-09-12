@@ -47,3 +47,7 @@
   flex: 1;
   padding: 20px;
 }
+
+.tab-btn:hover { transform: scale(1.05); background: rgba(0, 0, 0, 0.8); }
+.tab-btn.active:hover { background: #e65c00; }
+.logout-btn:hover { background-color: #cc0000; transform: scale(1.05); box-shadow: 0 4px 10px rgba(255,68,68,0.4); }
